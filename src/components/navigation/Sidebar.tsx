@@ -2,18 +2,20 @@ import {FC} from 'react';
 import styles from './Sidebar.module.css';
 import {Button, Center, Stack, useMantineColorScheme} from "@mantine/core";
 import {IconArrowsJoin, IconMoon, IconPlus, IconSun} from "@tabler/icons-react";
+import {useModal} from "../../hooks/useModal.ts";
 
 interface ISidebarProps {
 }
 
 export const Sidebar: FC<ISidebarProps> = () => {
   const {colorScheme, toggleColorScheme} = useMantineColorScheme()
+
+  const {openModal} = useModal("CreateServer")
   return (
     <nav className={styles.navbar}>
       <Center>
         <Button className={styles.link}
-                onClick={() => {
-                }}
+                onClick={openModal}
                 radius={100}
                 variant={"subtle"}
         >
