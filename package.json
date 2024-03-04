@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.5",
     "@clerk/clerk-react": "^4.28.1",
     "@mantine/carousel": "^7.2.2",
     "@mantine/code-highlight": "^7.2.2",
@@ -27,6 +28,8 @@
     "@tiptap/extension-link": "^2.1.12",
     "@tiptap/react": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",
+    "@types/apollo-upload-client": "^18.0.0",
+    "apollo-upload-client": "^18.0.1",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^7.1.0",
     "react": "^18.2.0",
@@ -35,6 +38,9 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.4",
+    "@parcel/watcher": "^2.4.1",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
@@ -43,11 +49,13 @@
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
+    "graphql": "^16.8.1",
     "postcss": "^8.4.31",
     "postcss-preset-mantine": "^1.11.0",
     "postcss-simple-vars": "^7.0.1",
     "sass": "^1.69.5",
-    "typescript": "^5.2.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
     "vite": "^5.0.0"
   }
 }

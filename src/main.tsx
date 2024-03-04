@@ -8,6 +8,8 @@ import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
 import {RootLayout} from "./layouts/RootLayout.tsx";
 import {HomePage} from "./pages/HomePage.tsx";
 import {CreateServerModal} from "./components/modals/CreateServerModal.tsx";
+import {ApolloProvider} from "@apollo/client";
+import client from "./apolloClient.ts";
 
 const ProtectedRoute = ({children}: { children: ReactNode }) => {
   return <>
@@ -30,7 +32,7 @@ const RouterComponent = () => {
           <Route index
                  element={
                    <ProtectedRoute>
-                     <CreateServerModal />
+                     <CreateServerModal/>
                      <HomePage/>
                    </ProtectedRoute>
                  }/>
@@ -42,11 +44,13 @@ const RouterComponent = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MantineProvider>
-      <BrowserRouter>
-        <RouterComponent/>
-      </BrowserRouter>
-    </MantineProvider>
+    <ApolloProvider client={client}>
+      <MantineProvider>
+        <BrowserRouter>
+          <RouterComponent/>
+        </BrowserRouter>
+      </MantineProvider>
+    </ApolloProvider>
   </React.StrictMode>,
 )
 

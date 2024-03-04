@@ -3,6 +3,7 @@ import styles from './Sidebar.module.css';
 import {Button, Center, Stack, useMantineColorScheme} from "@mantine/core";
 import {IconArrowsJoin, IconMoon, IconPlus, IconSun} from "@tabler/icons-react";
 import {useModal} from "../../hooks/useModal.ts";
+import {UserButton} from "@clerk/clerk-react";
 
 interface ISidebarProps {
 }
@@ -48,6 +49,7 @@ export const Sidebar: FC<ISidebarProps> = () => {
           : <IconSun radius={100} />
           }
         </Button>
+        <UserButton />
       </Stack>
     </nav>
   );
