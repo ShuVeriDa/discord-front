@@ -8,7 +8,7 @@ import {IconUpload, IconX} from "@tabler/icons-react";
 import {useMutation} from "@apollo/client";
 import {CREATE_SERVER} from "../../graphql/mutations/server/CreateServer.ts";
 import {CreateServerMutation, CreateServerMutationVariables,} from "../../gql/graphql"
-import {useProfileStore} from "../../pages/profileStore.ts";
+import {useProfileStore} from "../../stores/profileStore.ts";
 
 interface ICreateServerModalProps {
 }

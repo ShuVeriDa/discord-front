@@ -1,7 +1,7 @@
 import {FC, useEffect} from 'react';
 import {Outlet} from "react-router-dom";
 import {Sidebar} from "../components/navigation/Sidebar.tsx";
-import {useProfileStore} from "../pages/profileStore.ts";
+import {useProfileStore} from "../stores/profileStore.ts";
 import {useAuth, useSession} from "@clerk/clerk-react";
 import {useMutation} from "@apollo/client";
 import {CreateProfileMutation, CreateProfileMutationVariables} from "../gql/graphql.ts";
