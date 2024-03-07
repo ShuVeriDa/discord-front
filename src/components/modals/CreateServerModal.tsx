@@ -5,13 +5,21 @@ import {useForm} from "@mantine/form";
 import {Dropzone, DropzoneProps, IMAGE_MIME_TYPE} from "@mantine/dropzone";
 import styles from './CreateServerModal.module.css';
 import {IconUpload, IconX} from "@tabler/icons-react";
+import {useMutation} from "@apollo/client";
+import {CREATE_SERVER} from "../../graphql/mutations/server/CreateServer.ts";
+import {CreateServerMutation, CreateServerMutationVariables,} from "../../gql/graphql"
+import {useProfileStore} from "../../pages/profileStore.ts";
 
 interface ICreateServerModalProps {
 }
 
 export const CreateServerModal: FC<ICreateServerModalProps> = () => {
   const {isOpen, closeModal} = useModal("CreateServer")
+
+  const [createServer, {loading, error}] = useMutation<CreateServerMutation, CreateServerMutationVariables>(CREATE_SERVER)
   const [file, setFile] = useState<File | null>(null)
+
+  const profileId = useProfileStore((state) => state.profile?.id)
 
   const form = useForm({
     initialValues: {
@@ -22,8 +30,30 @@ export const CreateServerModal: FC<ICreateServerModalProps> = () => {
     }
   })
 
-  const handleDropzoneChange:DropzoneProps['onDrop'] = (files) => {
-    if(files.length === 0) {
+  const onSubmit = () => {
+    if (!form.validate()) return
+
+    createServer({
+      variables: {
+        input: {
+          name: form.values.name,
+          profileId: profileId!,
+        },
+        file,
+      },
+      onCompleted: () => {
+        setImagePreview(null)
+        setFile(null)
+        form.reset
+        closeModal()
+      },
+
+      refetchQueries: ["GetServers"],
+    })
+  }
+
+  const handleDropzoneChange: DropzoneProps['onDrop'] = (files) => {
+    if (files.length === 0) {
       return setImagePreview(null)
     } else {
       const reader = new FileReader()
@@ -44,8 +74,7 @@ export const CreateServerModal: FC<ICreateServerModalProps> = () => {
       <Text>
         Give your a server personality with a name and an image. You can always change it later.
       </Text>
-      <form onSubmit={form.onSubmit(() => {
-      })}>
+      <form onSubmit={form.onSubmit(() => onSubmit())}>
         <Stack>
           <Flex justify={"center"} align={"center"} direction={"column"}>
             {
@@ -65,18 +94,18 @@ export const CreateServerModal: FC<ICreateServerModalProps> = () => {
                   <Dropzone.Idle>
                     <IconUpload size="3.2rem" stroke={1.5}/>
                   </Dropzone.Idle>
-                  <>
+                  <Stack>
                     <Text size={"xl"} inline>
                       Drag images here or click to select files
                     </Text>
                     <Text size={"sm"} c="dimmed" inline mt={7}>
                       Upload a server icon
                     </Text>
-                  </>
+                    {error?.message && !file && <Text c={'red'}>{error?.message} </Text>}
+                  </Stack>
                 </Group>
               </Dropzone>
             }
-
             {
               imagePreview && <Flex pos={"relative"} w={rem(150)} h={rem(150)} mt={"md"}>
                 <>
@@ -96,7 +125,7 @@ export const CreateServerModal: FC<ICreateServerModalProps> = () => {
                     <IconX color={"white"}/>
                   </Button>
                   <Image src={imagePreview}
-                         w={rem(150)}
+                         width={rem(150)}
                          height={rem(150)}
                          radius={"50%"}
 
@@ -108,13 +137,13 @@ export const CreateServerModal: FC<ICreateServerModalProps> = () => {
           <TextInput label={"Server name"}
                      placeholder="Enter server name"
                      {...form.getInputProps("name")}
-            error={form.errors.name}
+                     error={form.errors.name}
           />
           <Button w="30%"
                   type="submit"
                   variant="gradient"
                   mt="md"
-                  disabled={!!form.errors.name}
+                  disabled={!!form.errors.name || loading}
           >
             Create Server
           </Button>
