@@ -20,12 +20,12 @@ export type Scalars = {
 
 export type Channel = {
   __typename?: 'Channel';
-  createdAt: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['String']['output']>;
   id: Scalars['Float']['output'];
   members?: Maybe<Array<Member>>;
   name?: Maybe<Scalars['String']['output']>;
   type: ChannelType;
-  updatedAt: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 /** Defines the type of channel */

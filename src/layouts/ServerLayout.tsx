@@ -1,4 +1,6 @@
 import {FC} from 'react';
+import {Outlet} from "react-router-dom";
+import {ServerSidebar} from "../components/navigation/ServerSidebar.tsx";
 
 interface IServerLayoutProps {
 }
@@ -6,7 +8,8 @@ interface IServerLayoutProps {
 export const ServerLayout: FC<IServerLayoutProps> = () => {
   return (
     <div>
-      ServerLayout 
+      <ServerSidebar />
+      <Outlet />
     </div>
   );
 };

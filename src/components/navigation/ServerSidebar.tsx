@@ -11,7 +11,7 @@ export const ServerSidebar: FC<IServerSidebarProps> = () => {
   const navigate = useNavigate()
 
   const {serverId, memberId, channelId} = useParams()
-  const {textChannels} = useServer()
+  const {textChannels, server, role} = useServer()
 
   useEffect(() => {
     if (!channelId && !memberId && textChannels.length > 0) {
@@ -19,9 +19,13 @@ export const ServerSidebar: FC<IServerSidebarProps> = () => {
     }
   }, [channelId, memberId, navigate, serverId, textChannels]);
 
+  if(!server || !role) {
+    return null
+  }
+
   return (
     <nav className={styles.nav}>
-      <ServerHeader/>
+      <ServerHeader server={server} memberRole={role}/>
     </nav>
   );
 };
