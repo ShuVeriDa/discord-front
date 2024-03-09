@@ -1,7 +1,9 @@
 import {FC} from 'react';
 import {Divider, Flex, Menu, rem, Text} from "@mantine/core";
-import {MemberRole, Server} from "../../gql/graphql.ts";
+
 import {IconArrowAutofitDown, IconPlus, IconSettings, IconTrash, IconX} from "@tabler/icons-react";
+import {useModal} from "../../hooks/useModal.ts";
+import {MemberRole, Server} from "../../gql/graphql.ts";
 
 interface IServerHeaderProps {
   server: Server,
@@ -11,6 +13,10 @@ interface IServerHeaderProps {
 export const ServerHeader: FC<IServerHeaderProps> = ({server, memberRole}) => {
   const isAdmin = memberRole === MemberRole.Admin
   const isModerator = memberRole === MemberRole.Moderator || isAdmin
+
+  const inviteModal = useModal("InvitePeople")
+  const updateServerModal = useModal("UpdateServer")
+  const createChannelModal = useModal("CreateChannel")
 
   return (
     <Menu shadow={"md"} width={rem(320)}>
@@ -25,9 +31,11 @@ export const ServerHeader: FC<IServerHeaderProps> = ({server, memberRole}) => {
         </Flex>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item rightSection={<IconPlus/>}>Invite People</Menu.Item>
-        {isAdmin && <Menu.Item rightSection={<IconSettings/>}>Update Server</Menu.Item>}
-        {isModerator && <Menu.Item rightSection={<IconPlus/>}>Create Channel</Menu.Item>}
+        <Menu.Item onClick={inviteModal.openModal} rightSection={<IconPlus/>}>Invite People</Menu.Item>
+        {isAdmin &&
+          <Menu.Item onClick={updateServerModal.openModal} rightSection={<IconSettings/>}>Update Server</Menu.Item>}
+        {isModerator &&
+          <Menu.Item onClick={createChannelModal.openModal} rightSection={<IconPlus/>}>Create Channel</Menu.Item>}
         {isModerator && <Divider/>}
         {isAdmin && <Menu.Item color={"red"} rightSection={<IconTrash/>}>
           <Text>Delete Server</Text>

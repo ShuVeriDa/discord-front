@@ -14,6 +14,8 @@ import {ChannelLayout} from "./layouts/ChannelLayout.tsx";
 import {CreateChannelModal} from "./components/modals/CreateChannelModal.tsx";
 import {ChannelPage} from "./pages/ChannelPage.tsx";
 import {ServerLayout} from "./layouts/ServerLayout.tsx";
+import {InviteModal} from "./components/modals/server/inviteModal.tsx";
+import {UpdateServerModal} from "./components/modals/server/UpdateServerModal.tsx";
 
 const ProtectedRoute = ({children}: { children: ReactNode }) => {
   return <>
@@ -57,7 +59,10 @@ const RouterComponent = () => {
                element={<ChannelLayout/>}
         >
           <Route index element={<ProtectedRoute>
+            <CreateChannelModal />
+            <UpdateServerModal />
             <CreateChannelModal/>
+            <InviteModal />
             <ChannelPage/>
           </ProtectedRoute>}
           />
